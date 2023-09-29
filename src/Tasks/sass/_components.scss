@@ -18,11 +18,13 @@
 
 .btn-add-task {
   padding: 1.3rem 2.6rem;
+  justify-self: center;
   // position: absolute;
   // bottom: 2rem;
   // right: 2rem;
   // transform: translate(-4rem, -4rem);
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+  justify-self: end;
 
   &:hover {
     box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.08);

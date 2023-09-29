@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./sass/App-tasks-main.scss";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -28,9 +28,11 @@ function TasksApp() {
   const [userLists, setUserLists] = useState(initialList);
   const [tasks, setTasks] = useState(initialTasks); //ids treba da resim
   const [selectedUserList, setSelectedUserList] = useState(0);
-
+  const [list, setList] = useState("");
+  const [task, setTask] = useState("");
   const [showFormAddTask, setShowFormAddTask] = useState(false);
   const [showFormAddList, setShowFormAddList] = useState(false);
+  const btnAddTaskEl = useRef(null);
 
   function handleAddTask(newTask) {
     setTasks((tasks) => [...tasks, newTask]);
@@ -50,6 +52,8 @@ function TasksApp() {
         showFormAddList={showFormAddList}
         handleAddList={handleAddList}
         setShowFormAddList={setShowFormAddList}
+        list={list}
+        setList={setList}
       />
 
       <Tasks tasks={tasks} />
@@ -59,6 +63,8 @@ function TasksApp() {
         selectedUserList={selectedUserList}
         handleAddTask={handleAddTask}
         setShowFormAddTask={setShowFormAddTask}
+        task={task}
+        setTask={setTask}
       />
     </div>
   );
@@ -80,6 +86,8 @@ function Header({
   showFormAddList,
   handleAddList,
   setShowFormAddList,
+  list,
+  setList,
 }) {
   return (
     <div className="header">
@@ -91,6 +99,8 @@ function Header({
         <FormAddList
           handleAddList={handleAddList}
           setShowFormAddList={setShowFormAddList}
+          list={list}
+          setList={setList}
         />
       )}
 
@@ -123,6 +133,52 @@ function UserLists({ userLists, selectedUserList }) {
   );
 }
 
+function FormAddList({ handleAddList, setShowFormAddList, list, setList }) {
+  const inputEl = useRef(null);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!list) return;
+    handleAddList(list);
+    setShowFormAddList((open) => !open);
+  }
+
+  useEffect(function () {
+    inputEl.current.focus();
+  }, []);
+
+  useEffect(
+    function () {
+      function handleClickOutside(e) {
+        if (inputEl.current && !inputEl.current.contains(e.target)) {
+          setList("");
+        }
+      }
+
+      document.addEventListener("click", handleClickOutside);
+
+      return function () {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    },
+    [setList]
+  );
+
+  return (
+    <form className="form form-add-list" onSubmit={(e) => handleSubmit(e)}>
+      <input
+        type="text"
+        placeholder="Type here..."
+        value={list}
+        onChange={(e) => setList(e.target.value)}
+        className="input input-new-list"
+        ref={inputEl}
+      />
+      <button className="btn btn-submit">Add list</button>
+    </form>
+  );
+}
+
 function Tasks({ userLists, selectedUserList, tasks }) {
   return (
     <ul className="tasks">
@@ -144,14 +200,19 @@ function AddTask({
   selectedUserList,
   handleAddTask,
   setShowFormAddTask,
+  task,
+  setTask,
 }) {
   return (
     <div className="add-task">
-      {!showFormAddTask && (
+      {showFormAddTask && (
         <FormAddTask
           selectedUserList={selectedUserList}
           handleAddTask={handleAddTask}
           setShowFormAddTask={setShowFormAddTask}
+          task={task}
+          setTask={setTask}
+          showFormAddTask={showFormAddTask}
         />
       )}
 
@@ -167,9 +228,14 @@ function AddTask({
   );
 }
 
-function FormAddTask({ selectedUserList, handleAddTask, setShowFormAddTask }) {
-  const [task, setTask] = useState("");
-
+function FormAddTask({
+  selectedUserList,
+  handleAddTask,
+  setShowFormAddTask,
+  task,
+  setTask,
+  showFormAddTask,
+}) {
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -183,7 +249,34 @@ function FormAddTask({ selectedUserList, handleAddTask, setShowFormAddTask }) {
 
     handleAddTask(newTask);
     setShowFormAddTask((open) => !open);
+    setTask("");
   }
+
+  const inputEl = useRef(null);
+
+  useEffect(function () {
+    inputEl.current.focus();
+  }, []);
+
+  useEffect(
+    function () {
+      function handleClickOutside(e) {
+        if (inputEl.current && !inputEl.current.contains(e.target)) {
+          setTask("");
+          // showFormAddTask && setShowFormAddTask((open) => !open);
+          setShowFormAddTask(false);
+          console.log("srle2");
+        }
+      }
+
+      document.addEventListener("click", handleClickOutside);
+
+      return function () {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    },
+    [setTask, setShowFormAddTask]
+  );
 
   return (
     <form className="form form-add-task" onSubmit={(e) => handleSubmit(e)}>
@@ -193,6 +286,7 @@ function FormAddTask({ selectedUserList, handleAddTask, setShowFormAddTask }) {
         value={task}
         onChange={(e) => setTask(e.target.value)}
         className="input"
+        ref={inputEl}
       />
       <button className="btn btn-submit">Add task</button>
     </form>
@@ -207,33 +301,6 @@ function ButtonAddTask({ children, btnClass, setShowFormAddTask }) {
     >
       {children}
     </button>
-  );
-}
-
-function FormAddList({ handleAddList, setShowFormAddList }) {
-  const [list, setList] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!list) return;
-
-    handleAddList(list);
-
-    setShowFormAddList((open) => !open);
-  }
-
-  return (
-    <form className="form form-add-list" onSubmit={(e) => handleSubmit(e)}>
-      <input
-        type="text"
-        placeholder="Type here..."
-        value={list}
-        onChange={(e) => setList(e.target.value)}
-        className="input"
-      />
-      <button className="btn btn-submit">Add list</button>
-    </form>
   );
 }
 
@@ -278,6 +345,7 @@ Arhitektura:
 - new comosition, grid
 - focus effect
 - local storage, a kasnije mozes i za local storage da vidis sa nekom custom hook
-- 
+- da li moze kada se klikne van ovih input elemenata, da se izvrsi brisanje sadrzaja ovih input polja
+- faktorisi kod, imas ponavljanja. Ovo za useEffects cemo da pravimo custom hook sto imas ponavljanja kod input za taskove i input za liste
 
 */

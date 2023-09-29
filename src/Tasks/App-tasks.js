@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./sass/App-tasks-main.scss";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Tune } from "@mui/icons-material";
 
 const initialList = ["Masterlist", "Shopping", "Car"];
 
@@ -20,9 +19,7 @@ const initialTasks = [
 export default function App() {
   return (
     <div className="container">
-      <div>
-        <TasksApp />
-      </div>
+      <TasksApp />
     </div>
   );
 }
@@ -31,10 +28,9 @@ function TasksApp() {
   const [userLists, setUserLists] = useState(initialList);
   const [tasks, setTasks] = useState(initialTasks); //ids treba da resim
   const [selectedUserList, setSelectedUserList] = useState(0);
-  const [selectedTask, setSelectedTask] = useState(null); // ovo mi mozda i ne treba
-  const [showFormAddTask, setShowFormAddTask] = useState(true);
+
+  const [showFormAddTask, setShowFormAddTask] = useState(false);
   const [showFormAddList, setShowFormAddList] = useState(false);
-  const [FormAddList, setFormAddList] = useState(false); // ovo je copmonent, ne state
 
   function handleAddTask(newTask) {
     setTasks((tasks) => [...tasks, newTask]);
@@ -44,11 +40,10 @@ function TasksApp() {
     setUserLists((userLists) => [...userLists, newList]);
   }
 
-  // function ToggleTaskCompleted() {}
-
   return (
     <div className="tasks-app">
       <Title />
+
       <Header
         userLists={userLists}
         selectedUserList={selectedUserList}
@@ -56,24 +51,15 @@ function TasksApp() {
         handleAddList={handleAddList}
         setShowFormAddList={setShowFormAddList}
       />
+
       <Tasks tasks={tasks} />
 
-      {showFormAddTask && (
-        <FormAddTask
-          selectedUserList={selectedUserList}
-          handleAddTask={handleAddTask}
-          setShowFormAddTask={setShowFormAddTask}
-        />
-      )}
-
-      {showFormAddTask && (
-        <ButtonAddTask
-          btnClass={"btn-add-task"}
-          setShowFormAddTask={setShowFormAddTask}
-        >
-          +
-        </ButtonAddTask>
-      )}
+      <AddTask
+        showFormAddTask={showFormAddTask}
+        selectedUserList={selectedUserList}
+        handleAddTask={handleAddTask}
+        setShowFormAddTask={setShowFormAddTask}
+      />
     </div>
   );
 }
@@ -101,9 +87,20 @@ function Header({
         <UserLists userLists={userLists} selectedUserList={selectedUserList} />
       )}
 
-      {showFormAddList && <FormAddList />}
       {showFormAddList && (
-        <ButtonAddList btnClass={"btn-add-list"}>+ Add list</ButtonAddList>
+        <FormAddList
+          handleAddList={handleAddList}
+          setShowFormAddList={setShowFormAddList}
+        />
+      )}
+
+      {!showFormAddList && (
+        <ButtonAddList
+          btnClass={"btn-add-list"}
+          setShowFormAddList={setShowFormAddList}
+        >
+          + Add list
+        </ButtonAddList>
       )}
     </div>
   );
@@ -139,6 +136,34 @@ function Tasks({ userLists, selectedUserList, tasks }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+function AddTask({
+  showFormAddTask,
+  selectedUserList,
+  handleAddTask,
+  setShowFormAddTask,
+}) {
+  return (
+    <div className="add-task">
+      {!showFormAddTask && (
+        <FormAddTask
+          selectedUserList={selectedUserList}
+          handleAddTask={handleAddTask}
+          setShowFormAddTask={setShowFormAddTask}
+        />
+      )}
+
+      {!showFormAddTask && (
+        <ButtonAddTask
+          btnClass={"btn-add-task"}
+          setShowFormAddTask={setShowFormAddTask}
+        >
+          +
+        </ButtonAddTask>
+      )}
+    </div>
   );
 }
 
@@ -194,11 +219,12 @@ function FormAddList({ handleAddList, setShowFormAddList }) {
     if (!list) return;
 
     handleAddList(list);
+
     setShowFormAddList((open) => !open);
   }
 
   return (
-    <form className="form form-add-list">
+    <form className="form form-add-list" onSubmit={(e) => handleSubmit(e)}>
       <input
         type="text"
         placeholder="Type here..."
@@ -222,8 +248,15 @@ function FormAddList({ handleAddList, setShowFormAddList }) {
 //   );
 // }
 
-function ButtonAddList({ children, btnClass }) {
-  return <button className={`btn ${btnClass}`}>{children}</button>;
+function ButtonAddList({ children, btnClass, setShowFormAddList }) {
+  return (
+    <button
+      className={`btn ${btnClass}`}
+      onClick={() => setShowFormAddList((open) => !open)}
+    >
+      {children}
+    </button>
+  );
 }
 
 /*
@@ -239,5 +272,12 @@ Arhitektura:
 - ovi keys sto sam koristio mi se ne svidjaju, promeni ih
 - napravi responsive da bude
 - faktorizuj kod 
+- izbaci apsolute positioning za ovo dole, mozes da koristis grid
+- dodaj i onaj effect kada se mountuje komponenta da ti automatski uradi fokus u nju
+
+- new comosition, grid
+- focus effect
+- local storage, a kasnije mozes i za local storage da vidis sa nekom custom hook
+- 
 
 */

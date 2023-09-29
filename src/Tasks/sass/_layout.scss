@@ -1,0 +1,128 @@
+.container {
+  height: 75vh;
+  width: 40%;
+  margin: 8rem auto;
+  border: 2px solid var(--color-primary-light-2);
+  padding: 2rem;
+  box-shadow: 0 1.5rem 2.5rem rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    to bottom right,
+    var(--color-primary-light-4),
+    var(--color-primary-light-5)
+  );
+  border-radius: 9px;
+
+  overflow: auto;
+  // position: relative;
+
+  // border: 2px solid green;
+}
+
+.tasks-app {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  // border: 2px solid green;
+  height: 100%;
+}
+
+// Title //////////////////////////////////////////////////////////////////////////
+
+.title {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0.6rem;
+
+  h1 {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #666;
+  }
+}
+
+//  //////////////////////////////////////////////////////////////////////////////////
+
+// Header ///////////////////////////////////////////////////////////////////////////
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: auto;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid var(--color-primary-light-4);
+  padding: 0.8rem;
+}
+
+.task-lists {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+
+  .task-list {
+    // border: 1px solid salmon;
+    background-color: var(--color-primary-light-4);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    padding: 0.8rem 1.2rem;
+    transition: all 0.3s;
+
+    &-active {
+      background-color: var(--color-primary-light-3);
+    }
+
+    &:hover {
+      background-color: var(--color-primary-light-3);
+    }
+  }
+}
+
+//   ///////////////////////////////////////////////////
+
+// Tasks   /////////////////////////////////////////////////////
+
+.tasks {
+  list-style: none;
+  // border: 2px solid var(--color-primary-light-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  // height: 45vh;
+  align-content: flex-start;
+  border-radius: 8px;
+  padding: 2rem;
+
+  .task {
+    padding: 1rem;
+    // border: 1px solid violet;
+    white-space: nowrap;
+    color: #17334a;
+    // background-color: var(--color-primary-light-5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: #555;
+    font-weight: 400;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: var(--color-primary-light-3);
+      // transform: scale(1.01);
+    }
+  }
+}
+
+// //////////////////////////////////////////////////////////////////////////////////////
+
+// Add task
+
+.add-task {
+  // border: 2px solid salmon;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

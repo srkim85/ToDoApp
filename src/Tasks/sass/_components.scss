@@ -1,96 +1,95 @@
-.container {
-  height: 75vh;
-  width: 40%;
-  margin: 8rem auto;
-  border: 2px solid var(--color-primary-light-2);
-  padding: 2rem;
-  box-shadow: 0 1.5rem 2.5rem rgba(0, 0, 0, 0.1);
-  background: linear-gradient(
-    to bottom right,
-    var(--color-primary-light-4),
-    var(--color-primary-light-5)
-  );
-  border-radius: 9px;
-  position: relative;
-}
+// Buttons //////////////////////////////////////////////////////////////////////////////
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  background-color: var(--color-primary-light-2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
 
-.title {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  padding: 0.6rem;
-
-  h1 {
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 2px;
-    color: #666;
+  &:hover {
+    background-color: var(--color-primary-light-1);
   }
 }
 
-.header {
+.btn-add-task {
+  padding: 1.3rem 2.6rem;
+  // position: absolute;
+  // bottom: 2rem;
+  // right: 2rem;
+  // transform: translate(-4rem, -4rem);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.08);
+    transform: translateY(-0.4rem);
+    // transform: translate(-1rem, -1rem);
+  }
+}
+
+.btn-add-list {
+  padding: 0.8rem 1.2rem;
+  white-space: nowrap;
+  margin-left: 4rem;
+}
+
+.btn-submit {
+  background-color: var(--color-primary-light-4);
+  font-size: 1.6rem;
+  padding: 0.8rem 1.2rem;
+  white-space: nowrap;
+}
+
+// //////////////////////////////////////////////////////////////////////////////
+
+// Forms /////////////////////////////////////////////////////////////////////////
+
+.form {
+  width: 70%;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #666;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  overflow-x: auto;
-  padding-bottom: 1.2rem;
-  border-bottom: 2px solid var(--color-primary-light-4);
-  padding: 0.8rem;
+  gap: 2rem;
+  background-color: var(--color-primary-light-3);
 }
 
-.task-lists {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
+.form-add-task {
+  // border: 2px solid salmon;
+  // position: absolute;
+  // bottom: 1.8rem;
+}
 
-  .task-list {
-    // border: 1px solid salmon;
-    background-color: var(--color-primary-light-4);
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05);
-    border-radius: 6px;
-    padding: 0.8rem 1.2rem;
-    transition: all 0.3s;
+.form-add-list {
+  background-color: var(--color-primary-light-5);
+  width: 75%;
+}
 
-    &-active {
-      background-color: var(--color-primary-light-3);
-    }
+.input {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.5rem;
+  font-family: inherit;
+  color: inherit;
+  border-radius: 2px;
+  border: none;
+  width: 80%;
 
-    &:hover {
-      background-color: var(--color-primary-light-3);
-    }
+  // padding: 1.5rem 2rem;
+  // background-color: rgba($color-white, 50%);
+  display: block;
+  transition: all 0.3s;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem var(--color-primary);
   }
 }
 
-.tasks {
-  list-style: none;
-  // border: 2px solid var(--color-primary-light-4);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  height: 45vh;
-  align-content: flex-start;
-  border-radius: 8px;
-  padding: 2rem;
-
-  .task {
-    padding: 1rem;
-    // border: 1px solid violet;
-    white-space: nowrap;
-    color: #17334a;
-    background-color: var(--color-primary-light-5);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    color: #555;
-    font-weight: 400;
-    transition: all 0.3s;
-
-    &:hover {
-      background-color: var(--color-primary-light-3);
-      // transform: scale(1.01);
-    }
-  }
-}
+// ////////////////////////////////////////////////////////////////////////////

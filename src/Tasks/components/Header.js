@@ -1,5 +1,4 @@
-import ClearIcon from "@mui/icons-material/Clear";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Header({
   userLists,
@@ -9,11 +8,16 @@ export default function Header({
   setShowFormAddList,
   list,
   setList,
+  setSelectedUserList,
 }) {
   return (
     <div className="header">
       {!showFormAddList && (
-        <UserLists userLists={userLists} selectedUserList={selectedUserList} />
+        <UserLists
+          userLists={userLists}
+          selectedUserList={selectedUserList}
+          setSelectedUserList={setSelectedUserList}
+        />
       )}
 
       {showFormAddList && (
@@ -37,12 +41,13 @@ export default function Header({
   );
 }
 
-function UserLists({ userLists, selectedUserList }) {
+function UserLists({ userLists, selectedUserList, setSelectedUserList }) {
   return (
     <ul className="task-lists">
-      {userLists.map((list) => (
+      {userLists?.map((list) => (
         <li
           key={list}
+          onClick={() => setSelectedUserList(userLists.indexOf(list))}
           className={`task-list ${
             list === userLists.at(selectedUserList) ? "task-list-active" : ""
           } `}
@@ -62,28 +67,12 @@ function FormAddList({ handleAddList, setShowFormAddList, list, setList }) {
     if (!list) return;
     handleAddList(list);
     setShowFormAddList((open) => !open);
+    setList("");
   }
 
   useEffect(function () {
     inputEl.current.focus();
   }, []);
-
-  useEffect(
-    function () {
-      function handleClickOutside(e) {
-        if (inputEl.current && !inputEl.current.contains(e.target)) {
-          setList("");
-        }
-      }
-
-      document.addEventListener("click", handleClickOutside);
-
-      return function () {
-        document.removeEventListener("click", handleClickOutside);
-      };
-    },
-    [setList]
-  );
 
   return (
     <form className="form form-add-list" onSubmit={(e) => handleSubmit(e)}>

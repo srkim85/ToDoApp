@@ -19,17 +19,13 @@
 .btn-add-task {
   padding: 1.3rem 2.6rem;
   justify-self: center;
-  // position: absolute;
-  // bottom: 2rem;
-  // right: 2rem;
-  // transform: translate(-4rem, -4rem);
+
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
   justify-self: end;
 
   &:hover {
     box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.08);
     transform: translateY(-0.4rem);
-    // transform: translate(-1rem, -1rem);
   }
 }
 
@@ -46,6 +42,14 @@
   white-space: nowrap;
 }
 
+.btn-del-list {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+
+  color: red;
+}
 // //////////////////////////////////////////////////////////////////////////////
 
 // Forms /////////////////////////////////////////////////////////////////////////
@@ -63,12 +67,6 @@
   background-color: var(--color-primary-light-3);
 }
 
-.form-add-task {
-  // border: 2px solid salmon;
-  // position: absolute;
-  // bottom: 1.8rem;
-}
-
 .form-add-list {
   background-color: var(--color-primary-light-5);
   width: 75%;
@@ -83,8 +81,6 @@
   border: none;
   width: 80%;
 
-  // padding: 1.5rem 2rem;
-  // background-color: rgba($color-white, 50%);
   display: block;
   transition: all 0.3s;
 

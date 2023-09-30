@@ -11,17 +11,12 @@
     var(--color-primary-light-5)
   );
   border-radius: 9px;
-
   overflow: auto;
-  // position: relative;
-
-  // border: 2px solid green;
 }
 
 .tasks-app {
   display: grid;
   grid-template-rows: auto auto 1fr auto;
-  // border: 2px solid green;
   height: 100%;
 }
 
@@ -63,7 +58,6 @@
   gap: 2rem;
 
   .task-list {
-    // border: 1px solid salmon;
     background-color: var(--color-primary-light-4);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05);
     border-radius: 6px;
@@ -84,23 +78,23 @@
 
 // Tasks   /////////////////////////////////////////////////////
 
+.tasks-container {
+  position: relative;
+}
+
 .tasks {
   list-style: none;
-  // border: 2px solid var(--color-primary-light-4);
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  // height: 45vh;
   align-content: flex-start;
   border-radius: 8px;
   padding: 2rem;
 
   .task {
     padding: 1rem;
-    // border: 1px solid violet;
     white-space: nowrap;
     color: #17334a;
-    // background-color: var(--color-primary-light-5);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -111,7 +105,6 @@
 
     &:hover {
       background-color: var(--color-primary-light-3);
-      // transform: scale(1.01);
     }
   }
 }
@@ -121,11 +114,6 @@
 // Add task
 
 .add-task {
-  // border: 2px solid salmon;
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;

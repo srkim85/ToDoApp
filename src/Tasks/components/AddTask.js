@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function AddTask({
   showFormAddTask,
@@ -7,6 +7,7 @@ export default function AddTask({
   setShowFormAddTask,
   task,
   setTask,
+  tasks,
 }) {
   return (
     <div className="add-task">
@@ -18,6 +19,7 @@ export default function AddTask({
           task={task}
           setTask={setTask}
           showFormAddTask={showFormAddTask}
+          tasks={tasks}
         />
       )}
 
@@ -39,8 +41,10 @@ function FormAddTask({
   setShowFormAddTask,
   task,
   setTask,
-  showFormAddTask,
+  tasks,
 }) {
+  const isIncluded = tasks.map((t) => t.taskName).includes(task);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -52,6 +56,11 @@ function FormAddTask({
       completed: false,
     };
 
+    if (isIncluded) {
+      alert("Task already added");
+      return;
+    }
+
     handleAddTask(newTask);
     setShowFormAddTask((open) => !open);
     setTask("");
@@ -62,26 +71,6 @@ function FormAddTask({
   useEffect(function () {
     inputEl.current.focus();
   }, []);
-
-  useEffect(
-    function () {
-      function handleClickOutside(e) {
-        if (inputEl.current && !inputEl.current.contains(e.target)) {
-          setTask("");
-          // showFormAddTask && setShowFormAddTask((open) => !open);
-          setShowFormAddTask(false);
-          console.log("srle2");
-        }
-      }
-
-      document.addEventListener("click", handleClickOutside);
-
-      return function () {
-        document.removeEventListener("click", handleClickOutside);
-      };
-    },
-    [setTask, setShowFormAddTask]
-  );
 
   return (
     <form className="form form-add-task" onSubmit={(e) => handleSubmit(e)}>

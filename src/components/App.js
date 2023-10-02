@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./../sass/App.scss";
+import "../sass/App.scss";
 import Title from "./Title";
 import Header from "./Header";
 import Tasks from "./Tasks";

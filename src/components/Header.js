@@ -26,6 +26,7 @@ export default function Header({
           setShowFormAddList={setShowFormAddList}
           list={list}
           setList={setList}
+          userLists={userLists}
         />
       )}
 
@@ -59,12 +60,25 @@ function UserLists({ userLists, selectedUserList, setSelectedUserList }) {
   );
 }
 
-function FormAddList({ handleAddList, setShowFormAddList, list, setList }) {
+function FormAddList({
+  userLists,
+  handleAddList,
+  setShowFormAddList,
+  list,
+  setList,
+}) {
+  const isIncluded = userLists.includes(list);
+
   const inputEl = useRef(null);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!list) return;
+    if (isIncluded) {
+      alert("Task already added");
+      return;
+    }
+
     handleAddList(list);
     setShowFormAddList((open) => !open);
     setList("");
